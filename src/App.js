@@ -46,15 +46,18 @@ function App() {
                 <ul className="list-group">
               {    
               pets.map((pet) => (
-              <li className="list-group-item" key={pets.id}>
-                    <spam className="lead">{pets.PetName}</spam>
-                    <spam className="lead">{pets.PetType}</spam>
-                    <spam className="lead">{pets.PetBreed}</spam>
-                    <spam className="lead">{pets.PetBornDate}</spam>
-                    <spam className="lead">{pets.NamePetOwner}</spam>
-                    <spam className="lead">{pets.PhonePetOwner}</spam>
-                    <spam className="lead">{pets.AdressPetOwner}</spam>
-                    <spam className="lead">{pets.EmailPetOwner}</spam>
+              <li className="list-group-item" key={pet.id}>
+                    <spam className="lead">{pet.PetName}</spam>
+                    <br></br>
+                    <spam className="lead">{pet.PetType}</spam>
+                    <br></br>
+                    <spam className="lead">{pet.PetBreed}</spam>
+                    <br></br>
+                    <spam className="lead">{pet.PetBornDate}</spam><br></br>
+                    <spam className="lead">{pet.NamePetOwner}</spam><br></br>
+                    <spam className="lead">{pet.PhonePetOwner}</spam><br></br>
+                    <spam className="lead">{pet.AdressPetOwner}</spam><br></br>
+                    <spam className="lead">{pet.EmailPetOwner}</spam><br></br>
                     <button
                       className="btn btn-outline-danger btn-sm float-right mx-2"
                     >Delete
