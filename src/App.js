@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Modal from './Modal/Modal'
 import './Modal/Modal.css'
 import { isEmpty, size } from 'loadsh'
-import { getCollection } from './actions'
+import { getCollection, deleteDocument } from './Modal/actions'
 
 function App() {
   const [pet, setPet] = useState("")
@@ -16,10 +16,19 @@ function App() {
       const result = await getCollection("Pets")
       if (result.statusResponse) {
         setPets(result.data)
-        console.log(result.data)
       }
     })()
   }, [])
+
+  const deletePet = async (id) => {
+    const result = await deleteDocument('Pets', id)
+    
+    if(!result.statusResponse){
+      
+      return
+    }
+    setPets(pets.filter(x => x.id != id))
+  }
 
   return (
     <div className="container mt-5">
@@ -47,19 +56,20 @@ function App() {
               {    
               pets.map((pet) => (
               <li className="list-group-item" key={pet.id}>
-                    <spam className="lead">{pet.PetName}</spam>
+                    <spam className="lead">Pet Name: {pet.PetName}</spam>
                     <br></br>
-                    <spam className="lead">{pet.PetType}</spam>
+                    <spam className="lead">Pet Type: {pet.PetType}</spam>
                     <br></br>
-                    <spam className="lead">{pet.PetBreed}</spam>
+                    <spam className="lead">Pet Breed: {pet.PetBreed}</spam>
                     <br></br>
-                    <spam className="lead">{pet.PetBornDate}</spam><br></br>
-                    <spam className="lead">{pet.NamePetOwner}</spam><br></br>
-                    <spam className="lead">{pet.PhonePetOwner}</spam><br></br>
-                    <spam className="lead">{pet.AdressPetOwner}</spam><br></br>
-                    <spam className="lead">{pet.EmailPetOwner}</spam><br></br>
+                    <spam className="lead">Pet Born Date: {pet.PetBornDate}</spam><br></br>
+                    <spam className="lead">Name Pet Owner: {pet.NamePetOwner}</spam><br></br>
+                    <spam className="lead">Phone Pet Owner: {pet.PhonePetOwner}</spam><br></br>
+                    <spam className="lead">Adress Pet Owner: {pet.AdressPetOwner}</spam><br></br>
+                    <spam className="lead">Email Pet Owner: {pet.EmailPetOwner}</spam><br></br>
                     <button
                       className="btn btn-outline-danger btn-sm float-right mx-2"
+                      onClick={() => deletePet(pet.id)}
                     >Delete
             </button>
                     <button
