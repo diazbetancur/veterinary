@@ -3,6 +3,8 @@ import Modal from './Modal/Modal'
 import './Modal/Modal.css'
 import { isEmpty, size } from 'loadsh'
 import { getCollection, deleteDocument } from './Modal/actions'
+import ModalDelete from './Modal/ModalDelete'
+import UpdateModal from './Modal/updateModal'
 
 function App() {
   const [pet, setPet] = useState("")
@@ -10,7 +12,8 @@ function App() {
   const [pets, setPets] = useState([])
   const [editMode, seEditMode] = useState(false)
   const [id, setId] = useState("")
-  
+  const [ModalIsOpen, setModalIsOpen] = useState(false)
+
   useEffect(() => {
     (async () => {
       const result = await getCollection("Pets")
@@ -19,16 +22,6 @@ function App() {
       }
     })()
   }, [])
-
-  const deletePet = async (id) => {
-    const result = await deleteDocument('Pets', id)
-    
-    if(!result.statusResponse){
-      
-      return
-    }
-    setPets(pets.filter(x => x.id != id))
-  }
 
   return (
     <div className="container mt-5">
@@ -53,33 +46,33 @@ function App() {
               <li className="list-group-item">there are no pets yet</li>
             ) : (
                 <ul className="list-group">
-              {    
-              pets.map((pet) => (
-              <li className="list-group-item" key={pet.id}>
-                    <spam className="lead">Pet Name: {pet.PetName}</spam>
-                    <br></br>
-                    <spam className="lead">Pet Type: {pet.PetType}</spam>
-                    <br></br>
-                    <spam className="lead">Pet Breed: {pet.PetBreed}</spam>
-                    <br></br>
-                    <spam className="lead">Pet Born Date: {pet.PetBornDate}</spam><br></br>
-                    <spam className="lead">Name Pet Owner: {pet.NamePetOwner}</spam><br></br>
-                    <spam className="lead">Phone Pet Owner: {pet.PhonePetOwner}</spam><br></br>
-                    <spam className="lead">Adress Pet Owner: {pet.AdressPetOwner}</spam><br></br>
-                    <spam className="lead">Email Pet Owner: {pet.EmailPetOwner}</spam><br></br>
-                    <button
-                      className="btn btn-outline-danger btn-sm float-right mx-2"
-                      onClick={() => deletePet(pet.id)}
-                    >Delete
-            </button>
-                    <button
-                      className="btn btn-outline-warning btn-sm float-right"
-                    >Edit
-            </button>
-                  </li>))
+                  {
+                    pets.map((pet) => (
+                      <li className="list-group-item" key={pet.id}>
+                        <spam className="lead">Pet Name: {pet.PetName}</spam>
+                        <br></br>
+                        <spam className="lead">Pet Type: {pet.PetType}</spam>
+                        <br></br>
+                        <spam className="lead">Pet Breed: {pet.PetBreed}</spam>
+                        <br></br>
+                        <spam className="lead">Pet Born Date: {pet.PetBornDate}</spam><br></br>
+                        <spam className="lead">Name Pet Owner: {pet.NamePetOwner}</spam><br></br>
+                        <spam className="lead">Phone Pet Owner: {pet.PhonePetOwner}</spam><br></br>
+                        <spam className="lead">Adress Pet Owner: {pet.AdressPetOwner}</spam><br></br>
+                        <spam className="lead">Email Pet Owner: {pet.EmailPetOwner}</spam><br></br>
+                        <div>                  
+                          <ModalDelete onClose={() => setModalIsOpen(false)} show={show} 
+                          > {pet.id}
+                          </ModalDelete>
+                        </div>
+                        <div>
+
+
+                          </div>
+                      </li>))
                   }
                 </ul>)
-                }
+          }
         </div>
       </div>
     </div>
