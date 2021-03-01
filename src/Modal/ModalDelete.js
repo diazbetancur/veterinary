@@ -18,6 +18,7 @@ const ModalExample = (props) => {
     if (!result.statusResponse) {
       return
     }
+    setModal(false)
   }
 
   return (

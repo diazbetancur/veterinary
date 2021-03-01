@@ -4,10 +4,10 @@ import './Modal/Modal.css'
 import { isEmpty, size } from 'loadsh'
 import { getCollection, deleteDocument } from './Modal/actions'
 import ModalDelete from './Modal/ModalDelete'
+import ModalAdd from './Modal/ModalAdd'
 import UpdateModal from './Modal/updateModal'
 
 function App() {
-  const [pet, setPet] = useState("")
   const [show, setShow] = useState(false)
   const [pets, setPets] = useState([])
   const [editMode, seEditMode] = useState(false)
@@ -32,13 +32,11 @@ function App() {
           <h4 className="text-center">Pets List</h4>
         </div>
         <div className="col-6">
-          <button
-            className="btn btn-outline-dark btn-sm float-right mx-2"
-            onClick={() => setShow(true)}>
-            Add Pet
-        </button>
-          <Modal onClose={() => setShow(false)} show={show}>
-          </Modal>
+          <div>  
+        {(<ModalAdd onClose={() => setModalIsOpen(false)} show={show}>            
+          </ModalAdd>)}       
+          </div> 
+          
         </div>
         <div className="col-12">
           {
@@ -66,8 +64,9 @@ function App() {
                           </ModalDelete>
                         </div>
                         <div>
-
-
+                        <UpdateModal onClose={() => setModalIsOpen(false)} show={show}>
+                        {pet}
+                        </UpdateModal>
                           </div>
                       </li>))
                   }

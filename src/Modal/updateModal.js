@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {updateDocument } from './actions'
 
@@ -34,9 +34,24 @@ const ModalExample = (props) => {
     EmailPetOwner: ''
 }
 
-  const updatePet = async (id) => {console.log(props.children)
+useEffect(() => {
+    (async () => {
+        const {id, PetName, PetType, PetBreed, PetBornDate, NamePetOwner, PhonePetOwner, AdressPetOwner, EmailPetOwner} = props.children
+        setPetName(PetName)
+        setId(id)
+        setPetType(PetType)
+        setPetBreed(PetBreed)
+        setPetBornDate(PetBornDate)
+        setNamePetOwner(NamePetOwner)
+        setPhonePetOwner(PhonePetOwner)
+        setAdressPetOwner(AdressPetOwner)
+        setEmailPetOwner(EmailPetOwner)
+    })()
+  }, [])
 
-    infoPet.PetName = props.children
+  const updatePet = async () => {
+
+    infoPet.Id = Id
     infoPet.PetName = PetName
     infoPet.PetType = PetType
     infoPet.PetBreed = PetBreed
@@ -47,21 +62,24 @@ const ModalExample = (props) => {
     infoPet.EmailPetOwner = EmailPetOwner
     
     setPet(infoPet)
-    const result = await updateDocument("Pets", props.children, pet)
-    
+    console.log(props.children)
+    console.log(pet)
+    const result = await updateDocument("Pets", infoPet.Id , pet)
+    console.log(result)
     if (!result.statusResponse) {
         
         return
     }
+    setModal(false)
   }
 
   return (
     <div>
-      <Button color="danger" onClick={toggle}>{buttonLabel}</Button>
-      <Modal isOpen={modal} toggle={toggle} className={className}>
+      <Button color="btn btn-outline-warning btn-sm float-right mx-2" onClick={toggle}>{buttonLabel}</Button>
+      <Modal isOpen={modal} toggle={toggle} className={className} >
         <ModalHeader toggle={toggle}>Delete Pet</ModalHeader>
         <ModalBody>
-        <form>
+        <form>            
                         <div className="row">
                             <div className="col-12">
                                 <input type="text"
@@ -145,7 +163,7 @@ const ModalExample = (props) => {
                     </form>
         </ModalBody>
         <ModalFooter>
-          <Button color="danger" onClick={updatePet()}>Update</Button>
+          <Button color="danger" onClick={updatePet}>Update</Button>
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>
